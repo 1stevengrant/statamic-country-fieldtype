@@ -1,16 +1,12 @@
 <?php
 
-namespace Parfaitementweb\StatamicCountryFieldtype;
+namespace Ghijk\CountryFieldtype;
 
-use Parfaitementweb\StatamicCountryFieldtype\Fieldtypes\CountrySelector;
+use Ghijk\CountryFieldtype\Fieldtypes\CountrySelector;
 use Statamic\Providers\AddonServiceProvider;
 
 class ServiceProvider extends AddonServiceProvider
 {
-    protected $scripts = [
-        __DIR__ . '/../public/js/addon.js'
-    ];
-
     protected $fieldtypes = [
         CountrySelector::class,
     ];

@@ -1,9 +1,12 @@
 <?php
 
-namespace Parfaitementweb\StatamicCountryFieldtype\Fieldtypes;
+namespace Ghijk\CountryFieldtype\Fieldtypes;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
+use Statamic\Fields\LabeledValue;
 use Statamic\Fieldtypes\Select;
+use Symfony\Component\Intl\Countries;
 
 class CountrySelector extends Select
 {
@@ -16,14 +19,33 @@ class CountrySelector extends Select
         return __('Country');
     }
 
+    public function preload(): array
+    {
+        return [
+            'options' => $this->getCountryOptions(),
+        ];
+    }
+
+    public function augment($value)
+    {
+        if (is_null($value)) {
+            return null;
+        }
+
+        $locale = App::getLocale();
+
+        if ($this->config('multiple')) {
+            return collect(Arr::wrap($value))
+                ->map(fn (string $code) => $this->augmentValue($code, $locale))
+                ->all();
+        }
+
+        return $this->augmentValue($value, $locale);
+    }
+
     protected function configFieldItems(): array
     {
         return [
-            'language' => [
-                'display' => __('Language'),
-                'type' => 'hidden',
-                'default' => App::getLocale(),
-            ],
             'placeholder' => [
                 'display' => __('Placeholder'),
                 'instructions' => __('statamic::fieldtypes.select.config.placeholder'),
@@ -50,7 +72,31 @@ class CountrySelector extends Select
                 'type' => 'toggle',
                 'default' => true,
                 'width' => 50,
-            ]
+            ],
         ];
+    }
+
+    private function getCountryOptions(): array
+    {
+        $locale = App::getLocale();
+
+        return collect(Countries::getNames($locale))
+            ->map(fn (string $name, string $code) => [
+                'label' => $name,
+                'value' => $code,
+            ])
+            ->values()
+            ->all();
+    }
+
+    private function augmentValue(string $code, string $locale): LabeledValue
+    {
+        try {
+            $label = Countries::getName($code, $locale);
+        } catch (\Exception) {
+            $label = $code;
+        }
+
+        return new LabeledValue($code, $label);
     }
 }

@@ -1,24 +1,29 @@
 {
-    "name": "parfaitementweb/statamic-country-fieldtype",
+    "name": "ghijk/statamic-country-fieldtype",
     "description": "Country dropdown with ISO 3166 options values",
     "authors": [
         {
             "name": "Alexis Serneels"
         }
     ],
+    "require": {
+        "php": "^8.3",
+        "statamic/cms": "^6.0",
+        "symfony/intl": "^7.0"
+    },
     "autoload": {
         "psr-4": {
-            "Parfaitementweb\\StatamicCountryFieldtype\\": "src"
+            "Ghijk\\CountryFieldtype\\": "src"
         }
     },
     "extra": {
         "statamic": {
-            "name": "Statamic Country Fieldtype",
+            "name": "Country Fieldtype",
             "description": "Country dropdown with ISO 3166 options values"
         },
         "laravel": {
             "providers": [
-                "Parfaitementweb\\StatamicCountryFieldtype\\ServiceProvider"
+                "Ghijk\\CountryFieldtype\\ServiceProvider"
             ]
         }
     }
