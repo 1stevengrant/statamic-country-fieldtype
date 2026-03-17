@@ -1,46 +1,55 @@
-# Statamic Country (ISO 639-1) Dropdown Fieldtype
+# Statamic Country (ISO 3166) Dropdown Fieldtype
 
-![Statamic 3.0+](https://img.shields.io/badge/Statamic-3.0+-FF269E?style=for-the-badge&link=https://statamic.com)
-> The simplest way to list every country as a selectable dropdown 🤘
+![Statamic 6.0+](https://img.shields.io/badge/Statamic-6.0+-FF269E?style=for-the-badge&link=https://statamic.com)
+
+The simplest way to list every country as a selectable dropdown.
 
 ## Features
-- Display a select field with **every ISO 639-1 language**. _tl;dr: The two-letter code._
-- Built-in **localization** in **70+** languages.
+
+- Display a select field with every **ISO 3166-1 alpha-2** country code.
+- Built-in **localization** powered by Symfony Intl (all ICU locales supported).
 - Set a **placeholder**.
 - Allow **multiple selections**.
 - Set a **maximum number of selectable items**.
-- Enable **searching** through possible options.
+- Enable **searching** through options.
 
-## Getting Started
+## Requirements
 
-We have made things easy for you start. Here is the three steps your need to follow:
+- PHP 8.3+
+- Statamic 6.0+
 
-1. **Install the addon**  
-   Simply run `composer require parfaitementweb/statamic-country-fieldtype`  
-   You also can follow [official Statamic help guide](https://statamic.dev/addons#installing-addons)  
-   
+## Installation
 
-2. **Add the Country fieldtype.**  
-   Choose your display and hanlde values. 
-   Customize the behavior using our various fieldtypes settings.
+```bash
+composer require ghijk/statamic-country-fieldtype
+```
 
+You can also follow the [official Statamic addon installation guide](https://statamic.dev/addons#installing-addons).
 
-3. **Enjoy.**
+## Usage
 
-## Built-in translations
-Country values are **automaticaly** displayed in current user locale, based on the current `locale` from the `App::getLocale()` value.
+Add the **Country** fieldtype to your blueprint. The fieldtype stores ISO 3166-1 alpha-2 country codes (e.g. `US`, `GB`, `NL`).
 
-The addon supports _Afrikaans, Amharic, Arabic, Azerbaijani, Belorussian, Bulgarian, Bengali, Bosnian, Catalan, Czech, Danish, German, English, Spanish, Estonian, Persian, Finnish, French, Galician, Greek, Hausa, Hebrew, Hindi, Croatian, Hungarian, Armenian, Icelandic, Italian, Indonesian, Japanese, Georgian, Kazakh, Khmer, Korean, Kurdish, Kyrgyz, Lithuanian, Latvian, Macedonian, Malayalam, Mongolian, Malay, Norwegian Bokmål, Dutch, Norwegian Nynorsk, Norwegian, Polish, Pashto, Portuguese, Romanian, Russian, Sindhi, Slovak, Slovene, Somali, Albanian, Serbian, Swedish, Tamil, Tajik, Thai, Turkish, Tatar, Uyghur, Ukrainian, Urdu, Uzbek, Chinese, Vietnamese_.
+In your templates, the country name is returned in the current locale:
 
-## What does your addon look like?
+```antlers
+{{ country }}
+```
 
-![Statamic Language Country Dropdown](https://parfaitementweb.com/statamic/statamic-country-fieldtype/fieldtype-preview.png)  
+To get the raw country code:
 
-![Statamic Language Country Options](https://parfaitementweb.com/statamic/statamic-country-fieldtype/fieldtype-locale.png)
+```antlers
+{{ country:value }}
+```
 
-![Statamic Language Country Options](https://parfaitementweb.com/statamic/statamic-country-fieldtype/fieldtype-options.png)
+## Localization
+
+Country names are automatically displayed in the current application locale, based on `App::getLocale()`. All locales supported by PHP's ICU data are available.
 
 ## Changelog
 
-**V1.0.0**  
-🚀 Launching this awesome fieldtype to every country.
+**V2.0.0**
+Upgraded to Statamic 6. Moved country data from JavaScript to PHP via `symfony/intl`, removing the need for any JS build step.
+
+**V1.0.0**
+Initial release.
