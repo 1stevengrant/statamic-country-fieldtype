@@ -10,6 +10,8 @@ use Symfony\Component\Intl\Countries;
 
 class CountrySelector extends Select
 {
+    protected $component = 'select';
+
     protected $icon = 'earth';
 
     protected $categories = ['text'];
