@@ -10,4 +10,8 @@ class ServiceProvider extends AddonServiceProvider
     protected $fieldtypes = [
         CountrySelector::class,
     ];
+
+    protected $scripts = [
+        __DIR__.'/../public/js/addon.js',
+    ];
 }
